@@ -1,6 +1,6 @@
 {
   "name": "@mhoobler/proxy.io",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Barebones boilerplate to set up a NodeJS proxy server.",
   "license": "MIT",
   "repository": {
@@ -14,8 +14,9 @@
   ],
   "scripts": {
     "dev": "node --experimental-specifier-resolution=node --loader=ts-node/esm examples/simple.ts",
+    "test": "mocha",
     "build": "rm -rf ./dist && tsc",
-    "test": "mocha"
+    "pub": "yarn build && yarn publish --access public"
   },
   "dependencies": {
     "socket.io": "^4.7.2"

@@ -83,7 +83,7 @@ export function HttpServer(
   return { server, ws };
 }
 
-export function defaultOptions(req: HttpRequest) {
+export function defaultOptions(req: HttpRequest): RequestOptions {
   return {
       hostname: Config.hostName,
       port: Config.hostPort,

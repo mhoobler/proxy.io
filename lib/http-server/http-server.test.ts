@@ -67,8 +67,8 @@ describe('HttpServer', () => {
     expect(options.port).to.equal(1337);
     expect(options.path).to.equal(req.url as string);
     expect(options.method).to.equal(req.method as string);
-    expect(options.headers['accept-encoding']).to.equal('gzip');
-    expect(options.headers['accept-language']).to.equal('en');
+    expect(options.headers!['accept-encoding']).to.equal('gzip');
+    expect(options.headers!['accept-language']).to.equal('en');
 
 
   })
