@@ -1,0 +1,19 @@
+{
+  "name": "live-reload",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "bin": {
+    "live-reload": "./bin/live-reload"
+  },
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "rm -rf ./dist && tsc",
+    "reinstall": "yarn remove @mhoobler/proxy.io && cd ../../ && yarn build && cd examples/live-reload && yarn add file:../../"
+  },
+  "dependencies": {
+    "@mhoobler/proxy.io": "file:../../",
+    "cheerio": "^1.0.0-rc.12",
+    "chokidar": "^3.5.3"
+  }
+}

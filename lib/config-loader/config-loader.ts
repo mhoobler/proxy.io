@@ -24,7 +24,6 @@ export type HttpsSettings = {
 export type ConfigSettings = {
   httpPort: number,
   socketPort: number,
-  useHttps: boolean,
   httpsSettings?: HttpsSettings,
   hostName: string,
   hostPort: number,
@@ -32,7 +31,6 @@ export type ConfigSettings = {
 
 export const DEFAULT_CONFIG = {
   httpPort: 3000,
-  useHttps: false,
   socketPort: 3001,
   hostName: 'localhost',
   hostPort: 80,
@@ -94,7 +92,6 @@ export async function LoadConfig(
     config = {
       httpPort: parsed.httpPort || DEFAULT_CONFIG.httpPort,
       socketPort: parsed.socketPort || DEFAULT_CONFIG.socketPort,
-      useHttps: parsed.useHttps || DEFAULT_CONFIG.useHttps,
       hostName: parsed.hostName || DEFAULT_CONFIG.hostName,
       hostPort: parsed.hostPort || DEFAULT_CONFIG.hostPort,
     }

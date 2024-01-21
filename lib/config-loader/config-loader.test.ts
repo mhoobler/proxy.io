@@ -48,24 +48,11 @@ function createMocks(testFile: unknown, testAccess: unknown): Dependencies {
 }
 
 describe('ConfigLoader', () => {
-  it('Ignores `httpSettings` when `useHttps` is falsey', async () => {
-    const TEST_CONFIG: Partial<ConfigSettings> = {
-      httpsSettings: {
-        key: 'testKey',
-        cert: 'testCert'
-      },
-    };
-    const mocks = createMocks(JSON.stringify(TEST_CONFIG), true);
-
-    const { httpsSettings } = await LoadConfig("any", mocks)
-    expect(httpsSettings).to.equal(null);
-  });
 
   it('Overrides DEFAULT_CONFIG with TEST_CONFIG', async () => {
     const TEST_CONFIG: Partial<ConfigSettings> = {
       httpPort: 9999,
       socketPort: 999,
-      useHttps: true,
       httpsSettings: {
         key: 'wiggle',
         cert: 'jiggle',
@@ -83,7 +70,6 @@ describe('ConfigLoader', () => {
     // key/cert
     {
       const TEST_CONFIG: Partial<ConfigSettings> = {
-        useHttps: true,
         httpsSettings: {
           key: 'testKey',
           cert: 'testCert'
@@ -98,7 +84,6 @@ describe('ConfigLoader', () => {
     // pfx/passphrase
     {
       const TEST_CONFIG: Partial<ConfigSettings> = {
-        useHttps: true,
         httpsSettings: {
           pfx: 'testPfx',
           passphrase: 'testPassphrase'
@@ -114,16 +99,14 @@ describe('ConfigLoader', () => {
   it('Partially overrides DEFAULT_CONFIG with TEST_CONFIG', async () => {
     const TEST_CONFIG = {
       httpPort: 9999,
-      useHttps: true,
       socketPort: 999,
     };
     const mocks = createMocks(JSON.stringify(TEST_CONFIG), true);
 
-    const { httpPort, useHttps, socketPort, hostName, hostPort } =
+    const { httpPort, socketPort, hostName, hostPort } =
       await LoadConfig("any", mocks);
 
     expect(httpPort).to.equal(TEST_CONFIG.httpPort);
-    expect(useHttps).to.equal(TEST_CONFIG.useHttps);
     expect(socketPort).to.equal(TEST_CONFIG.socketPort);
     expect(hostName).to.equal(DEFAULT_CONFIG.hostName);
     expect(hostPort).to.equal(DEFAULT_CONFIG.hostPort);
