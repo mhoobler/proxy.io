@@ -1,27 +1,36 @@
-import { 
+import {
   LoadConfig,
   HttpServer,
   AddScript,
   defaultOptions,
+  HttpDependencies,
 } from "./imports";
+import { Server as WSServer } from "socket.io";
+import { Server as NodeServer } from "http";
 
-function createServer(deps?: any) {
-  let proxyServer = {
-    on: AddScript,
-    defaultOptions,
-  };
+type ProxyIO = {
+  server: null | NodeServer;
+  ws: null | WSServer;
+  on: typeof AddScript;
+  defaultOptions: typeof defaultOptions;
+};
 
+type AppInitCallback = (app: ProxyIO) => void;
+
+function createServer(
+  ready: AppInitCallback,
+  deps?: HttpDependencies,
+): ProxyIO | null {
+  let app = null;
   LoadConfig().then((config) => {
-    const { server } = HttpServer(config, deps);
-    proxyServer = {
-      ...server,
+    app = {
+      ...(HttpServer(config, deps) as ProxyIO),
       on: AddScript,
       defaultOptions,
     };
+    ready(app);
   });
-
-  return proxyServer;
+  return app;
 }
-
-export { createServer };
+export { createServer, ProxyIO };
 export { HttpRequest, HttpResponse, ProxyFunction } from "./imports";

@@ -2,23 +2,17 @@
   "compilerOptions": {
     "outDir": "./dist",
     "target": "ES2022",
-    "module":"CommonJS",
+    "module": "CommonJS",
     "declaration": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "lib": ["ESNext", "DOM"],
     "strict": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": [
-    "./lib/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["./lib/**/*"],
+  "exclude": ["node_modules"],
   "ts-node": {
     "esm": true
   }
