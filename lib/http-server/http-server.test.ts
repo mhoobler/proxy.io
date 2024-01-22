@@ -1,6 +1,6 @@
-import {expect} from "chai";
+import { expect } from "chai";
 
-import {defaultOptions, HttpRequest, HttpServer} from "./http-server";
+import { defaultOptions, HttpRequest, HttpServer } from "./http-server";
 
 function mockServer(spy?: any): any {
   const server: any = {};
@@ -42,15 +42,15 @@ function mockServer(spy?: any): any {
 
 describe("HttpServer", () => {
   it("Mock works.", () => {
-    const {server, dependencies} = mockServer();
+    const { server, dependencies } = mockServer();
     const settings: any = {};
 
-    const {server: httpServer} = HttpServer(settings, dependencies);
+    const { server: httpServer } = HttpServer(settings, dependencies);
     expect(httpServer).to.equal(server);
   });
 
   it("properly constructs defaultOptions", () => {
-    const {dependencies} = mockServer();
+    const { dependencies } = mockServer();
     const settings: any = {
       hostName: "TestHost",
       hostPort: 1337,

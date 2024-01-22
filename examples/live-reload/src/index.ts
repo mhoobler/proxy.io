@@ -4,10 +4,10 @@ import {
   createServer,
   ProxyIO,
 } from "@mhoobler/proxy.io";
-import {IncomingMessage, request} from "http";
-import {join} from "path";
-import {stat, createReadStream} from "fs";
-import {watch} from "chokidar";
+import { IncomingMessage, request } from "http";
+import { join } from "path";
+import { stat, createReadStream } from "fs";
+import { watch } from "chokidar";
 
 createServer((app: ProxyIO) => {
   CreateResponseHandlers(app);
@@ -18,7 +18,6 @@ const MAP_EXTENSIONS = {
   html: "text/html",
   js: "text/javascript",
 };
-
 
 function CreateResponseHandlers(app: ProxyIO) {
   app.on("*", AttachScripts);
@@ -31,9 +30,10 @@ function CreateResponseHandlers(app: ProxyIO) {
     const search = Buffer.from("</body>");
     const replace = Buffer.from(
       "<script src='/socket.io/socket.io.js'></script>" +
-      "<script src='/proxy.io/wsClient.js'></script>" +
-      "</body>",
+        "<script src='/proxy.io/wsClient.js'></script>" +
+        "</body>",
     );
+    console.log("test");
     let chunks = [];
 
     const proxyRequest = request(options, (proxyRes: IncomingMessage) => {
@@ -48,10 +48,10 @@ function CreateResponseHandlers(app: ProxyIO) {
           index === -1
             ? data
             : Buffer.concat([
-              data.subarray(0, index),
-              replace,
-              data.subarray(index + search.length),
-            ]);
+                data.subarray(0, index),
+                replace,
+                data.subarray(index + search.length),
+              ]);
 
         proxyRes.headers["content-length"] = newBuffer.byteLength.toString();
         res.writeHead(proxyRes.statusCode, proxyRes.headers);
@@ -59,7 +59,7 @@ function CreateResponseHandlers(app: ProxyIO) {
       });
     });
 
-    req.pipe(proxyRequest, {end: true});
+    req.pipe(proxyRequest, { end: true });
     return true;
   }
 
@@ -77,7 +77,7 @@ function CreateResponseHandlers(app: ProxyIO) {
       if (err) {
         // Handle file not found or other errors
         success = false;
-        res.writeHead(404, {"Content-Type": "text/plain"});
+        res.writeHead(404, { "Content-Type": "text/plain" });
         res.end("File not found");
         return;
       }
@@ -107,7 +107,7 @@ function CreateResponseHandlers(app: ProxyIO) {
 }
 
 function CreateFileWatcher(app: ProxyIO) {
-  const {ws} = app;
+  const { ws } = app;
   ws.on("connect", () => console.log("connect"));
   const watcher = watch(".", {
     ignored: ["**/node_modules"],
@@ -115,6 +115,6 @@ function CreateFileWatcher(app: ProxyIO) {
 
   watcher
     .on("add", (path) => console.log(`File ${path} has been added`))
-    .on("change", (path) => ws.emit("change", {path}))
+    .on("change", (path) => ws.emit("change", { path }))
     .on("unlink", (path) => console.log(`File ${path} has been removed`));
 }

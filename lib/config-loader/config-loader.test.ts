@@ -1,7 +1,7 @@
-import {Buffer} from "node:buffer";
-import {constants} from "fs";
-import {expect} from "chai";
-import {join} from "path";
+import { Buffer } from "node:buffer";
+import { constants } from "fs";
+import { expect } from "chai";
+import { join } from "path";
 
 import {
   LoadConfig,
@@ -78,7 +78,7 @@ describe("ConfigLoader", () => {
       };
       const mocks = createMocks(JSON.stringify(TEST_CONFIG), true);
 
-      const {httpsSettings} = await LoadConfig("any", mocks);
+      const { httpsSettings } = await LoadConfig("any", mocks);
       expect(httpsSettings).to.deep.equal(TEST_CONFIG.httpsSettings);
     }
 
@@ -92,7 +92,7 @@ describe("ConfigLoader", () => {
       };
       const mocks = createMocks(JSON.stringify(TEST_CONFIG), true);
 
-      const {httpsSettings} = await LoadConfig("any", mocks);
+      const { httpsSettings } = await LoadConfig("any", mocks);
       expect(httpsSettings).to.deep.equal(TEST_CONFIG.httpsSettings);
     }
   });
@@ -104,7 +104,7 @@ describe("ConfigLoader", () => {
     };
     const mocks = createMocks(JSON.stringify(TEST_CONFIG), true);
 
-    const {httpPort, socketPort, hostName, hostPort} = await LoadConfig(
+    const { httpPort, socketPort, hostName, hostPort } = await LoadConfig(
       "any",
       mocks,
     );
@@ -116,7 +116,7 @@ describe("ConfigLoader", () => {
   });
 
   it("Handles Errors from `fs.promises.access` and still has DEFAULT_CONFIG", async () => {
-    const TEST_CONFIG = {nothing: null};
+    const TEST_CONFIG = { nothing: null };
     const mocks = createMocks(JSON.stringify(TEST_CONFIG), false);
 
     const configSettings = await LoadConfig("any", mocks);

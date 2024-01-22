@@ -1,7 +1,7 @@
-import {access, readFile} from "fs/promises";
-import {constants} from "fs";
-import {join} from "path";
-import {ServerOptions} from "socket.io";
+import { access, readFile } from "fs/promises";
+import { constants } from "fs";
+import { join } from "path";
+import { ServerOptions } from "socket.io";
 
 export type Dependencies = {
   promises: {
@@ -11,7 +11,7 @@ export type Dependencies = {
       enumerator: number,
     ) => Promise<boolean | void> | typeof access;
   };
-  constants: {[key: string]: number} | typeof constants;
+  constants: { [key: string]: number } | typeof constants;
   path: {
     join: (...str: string[]) => string;
   };
@@ -19,13 +19,13 @@ export type Dependencies = {
 
 export type HttpsSettings =
   | {
-    key: string;
-    cert: string;
-  }
+      key: string;
+      cert: string;
+    }
   | {
-    pfx: string;
-    passphrase: string;
-  };
+      pfx: string;
+      passphrase: string;
+    };
 
 export type ConfigSettings = {
   httpPort: number;
@@ -38,7 +38,7 @@ export type ConfigSettings = {
 
 type ErrnoError = Error & {
   errno: number;
-}
+};
 
 export const DEFAULT_CONFIG = {
   httpPort: 3000,
@@ -57,7 +57,7 @@ const DEFAULT_DEPS: Dependencies = {
     join,
   },
 };
-let dependencies = {...DEFAULT_DEPS};
+let dependencies = { ...DEFAULT_DEPS };
 
 const MESSAGES = {
   success: "Config File loaded",
@@ -75,10 +75,10 @@ export async function LoadConfig(
     ...dependencies,
     ...deps,
   };
-  let config: ConfigSettings = {...DEFAULT_CONFIG};
+  let config: ConfigSettings = { ...DEFAULT_CONFIG };
 
-  const {promises, constants, path} = dependencies;
-  const {readFile, access} = promises;
+  const { promises, constants, path } = dependencies;
+  const { readFile, access } = promises;
 
   if (!fileName) {
     return config;
@@ -113,7 +113,7 @@ export async function LoadConfig(
     console.log(MESSAGES["success"]);
   } catch (err: unknown) {
     if (undefined !== (err as ErrnoError).errno) {
-      const {errno} = err as {errno: "-2" | "-13"};
+      const { errno } = err as { errno: "-2" | "-13" };
       const printError = MESSAGES[errno] || MESSAGES["default"];
       console.log(printError);
     }

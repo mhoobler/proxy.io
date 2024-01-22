@@ -1,6 +1,6 @@
 {
   "name": "@mhoobler/proxy.io",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Barebones boilerplate to set up a NodeJS proxy server.",
   "license": "MIT",
   "repository": {
